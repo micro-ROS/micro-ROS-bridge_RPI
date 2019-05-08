@@ -35,7 +35,7 @@ vcs-import src < micro_ros.repos
 
 docker run -it --rm \
     -v ~/micro-ros_rpi/polly:/polly \
-    -v ~/micro-ros_rpi/agent_ws:/ros2_ws \
+    -v ~/micro-ros_rpi/agent_ws:/agent_ws \
     -v ~/micro-ros_rpi/ros2_raspbian_tools/build_ros2_microros.bash:/build_ros2.bash \
     -v ~/micro-ros_rpi/rpi-root:/raspbian_ros2_root \
     -w /agent_ws \
