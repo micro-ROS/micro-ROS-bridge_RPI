@@ -14,16 +14,16 @@ This guide will show how to set-up a Raspberry Pi 3 (RPI) running Raspbian and a
 
 First we need to connect the PMODRF2 module to the RPI, so we need to set the next connections:
 
-| RPI | PMODRF2
--- | -- | --
-VIN | 1 | 12
-GND | 20 | 11
-RESET | 17 | 8
-INT | 16 | 7
-SDI | 19 | 2
-SDO | 21 | 3
-SCK | 23 | 4
-CS | 26 | 1
+|  | RPI | PMODRF2 |
+| -- | -- | -- |
+| VIN | 1 | 12 |
+| GND | 20 | 11 |
+| RESET | 17 | 8 |
+| INT | 16 | 7 |
+| SDI | 19 | 2 |
+| SDO | 21 | 3 |
+| SCK | 23 | 4 |
+| CS | 26 | 1 |
 
 In the next links you can see the pinout of each board:
 [- Raspberry Pi 3 pinout.](https://i.pinimg.com/originals/84/46/ec/8446eca5728ebbfa85882e8e16af8507.png)
@@ -123,21 +123,19 @@ Then will ask you if you want to set this board as a coordinator or as a node.
 The difference between a coordinator and a node is that the first one can work as a router, coordinating the network traffic of up to 8 nodes.
 On the other hand, the node is an endpoint device which only sends and receive data, it doesn't coordinate the traffic of the other devices.
 
-For this example we will set ``node`` to simplify the process, because we only want P2P connection.
+For this example we will set ``coordinator``.
 
 Finally will ask for a ID. This ID must be unique for each board. If everything goes find, this should return the next:
 
 ```bash
-Your hardware address is: i8sak set eaddr 00:fa:de:00:de:ad:be:01
+Your hardware address is: i8sak set eaddr 00:fa:de:00:de:ad:be:00
 
+i8sak: accepting all assoc requests
 i8sak: daemon started
-i8sak: issuing ASSOC. request 1
-i8sak: ASSOC.request failed: No ack
 ifup wpan0...OK
 Mounting proc file system
-i8sak: daemon closing
-wpan0   Link encap:6LoWPAN HWaddr 01:be:ad:de:00:de:fa:00 at UP
-        inet6 addr: fe80::3be:adde:de:fa00/64
+wpan0   Link encap:6LoWPAN HWaddr 00:be:ad:de:00:de:fa:00 at UP
+        inet6 addr: fe80::2be:adde:de:fa00/64
         inet6 DRaddr: ::/64
 
         RX: Received Fragment Errors  
@@ -160,9 +158,11 @@ Available commands
 
 ** At this point the network is ready to work!**
 
+Finally type ``quit`` two times to close the app and come back to the main menu.
+
 ## Sending a message from NuttX to Raspbian:
 
-### Raspberry Pi part:
+### Raspberry Part:
 
 We need to check our IP, so type in the console: ```ifconfig```
 This should return somenthing like this:
@@ -224,9 +224,52 @@ lowpan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1280
 ```
 
 As you can see there is two IP in this network interface. But you need to remenber the second one. We will use later with NuttX.
-```fe80::9c6e:87a5:eb60:84d0```
+`fe80::9c6e:87a5:eb60:84d0``
 
 Go to place where lives the repo that you donwloaded previously. Go to ``micro-ROS-bridge_RPI/RPI_6lowpan/Examples/6lowpan_recv``
 Finally execute recv_demo telling to open the 61616 port. Type this comand: ``./recv_demo 61616``
 
-At this point everything the RPI es ready to receive incoming packges.
+At this point the RPI is ready to receive incoming packges.
+
+### NuttX part:
+
+Execute ``udp_6lowpan`` application.
+This will ask you if you want to configure the network. As we already configure it, we don't need to do it again, so type N.
+Now you're in the main menu of the App. Type ``write`` to start the sending mode and will ask for the next data:
+- The destination IP: This is the IP of the RPI which we save previously.
+- The destination port: For this specific example is 61617.
+- The origin port: This is the port that we want to open to send the message, for example we could use 61618.
+
+At this point it should look like this:
+
+``` bash
+nsh> udp_6lowpan                                                                
+Do you want to execute the automatic WPAN configuration? (y/n)                  
+
+Available commands                                                              
+ -To send a package type: write                                                 
+ -To receive a package type: read                                               
+ -To exit type: quit                                                            
+Introduce the IVP6 Destination                                                  
+Introduce the port destination                                                  
+Introduce the port origin                                                       
+Conection data:                                                                 
+ -Dest_IP: fe80::857:adfe:5a82:c7ac                                             
+ -Dest_Port: 61616                                                              
+ -Origin_Port: 61617                                                            
+Introduce a message to send:
+```
+Now if you type somenthing and press enter NuttX should show the next:
+```bash
+Introduce a message to send:                                                    
+Sending 5 characters: hello  
+```
+
+And the RPI, should show the next message:
+```bash
+Received (from fe80::2be:adde:de:fa00): hello
+```
+
+## Sending a message from the Raspbian to NuttX:
+
+**Very important note! :**
