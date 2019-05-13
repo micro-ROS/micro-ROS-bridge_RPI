@@ -21,6 +21,6 @@ The micro-ROS bridge is a tool which connects the Micro-ROS world with ROS2 worl
   - Script to cross-compile: This script automates the process of cross-compilation micro-ROS agent for ARMV7 architecture. This process allows us to reduce dramatically the compilation time in comparison with compile natively in the RPI.
   - Readme.md: Instructions of how to execute the script and copy to the compiled files to the RPI.
 
-  - ROS2_Cross-Compilation:
+- ROS2_Cross-Compilation:
     - Script to cross-compile: This script automates the process of cross-compilation ROS2 crystal for ARMV7 architecture. This process allows us to reduce dramatically the compilation time in comparison with compile natively in the RPI.
     - Readme.md: Instructions of how to execute the script and copy to the compiled files to the RPI.
