@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
-
 mkdir -p ~/ros2_rpi/ros2_ws/src
 cd ~/ros2_rpi/ros2_ws
 
