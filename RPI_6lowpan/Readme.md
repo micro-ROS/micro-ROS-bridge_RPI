@@ -275,6 +275,24 @@ Received (from fe80::2be:adde:de:fa00): hello
 **Very important note! :**
 The Linux 6lowpan utility needs to have a ping response before sending a data package, but the ping implementation of NuttX is not compatible. So the solution for this problem is to send a message from NuttX to Linux, just to add the NuttX direction to the neighborhood table.
 
+If this does not work, do as follow:
+
+Check if the Nuttx address is part within the Linux/Raspbian neighborhood table.
+If it is, remove it:
+```bash
+ $ ip neigh  # a bunch of address shall appear including yours (if you send a
+	message already)
+   fe80::2be:adde:de:fa00 dev lowpan0  FAILED
+ $ sudo ip neigh delete fe80::2be:adde:de:fa00 dev lowpan0 # Remove it.
+```
+
+Then once delete add the Nuttx device it permanently (until reboot):
+
+```bash
+ $ sudo ip neigh add fe80::2be:adde:de:fa00 dev lowpan0 00:be:ad:de:00:de:fa:00 # Add it with the
+corret  Hardware address.
+```
+
 ### NuttX part:
 First we need the ip of the board, so type ``ifconfig`` in the main menu. This should return somenthing like this:
 ```bash
