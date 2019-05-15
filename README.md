@@ -37,8 +37,17 @@ First, we need to install Raspbian Little in our RPI, you can follow the next gu
 [- Download Raspbian Lite](https://downloads.raspberrypi.org/raspbian_lite_latest)
 [-Raspbian Lite installation guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
 
-Once is already installed, in the SD card, please insert on the RPI and will be ready to work.
-The next step will be the cross-compilation of ROS2 for RPI.
+Once Raspbian is installed on the SD, please insert on the RPI and do the next steps:
+  - Execute the raspi-config menu: ``sudo raspi-config``
+  - Inside the raspi-config menu, enable the serial communication:  Interfacing Options -> Serial -> Yes
+  - Expand the file system: Advance Options -> Expan Filesystem.
+  - Install the next dependencies:
+    - ``sudo apt install python3-pip``
+    - ``python3 -m pip install catkin_pkg empy lark-parser pyparsing pyyaml setuptools argcomplete``
+    - ``sudo apt-get install libtinyxml2-dev``
+
+
+Now is everything ready, the next step will be the cross-compilation of ROS2 for RPI.
 
 ### ROS2 cross-compilation:
 
