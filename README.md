@@ -69,5 +69,5 @@ Once it finished, copy the folder ``~/micro-ros_rpi/client_ws/ `` to the user fo
 ### 6lowpan installation
 
 Copy ``micro-ROS-bridge_RPI/RPI_6lowpan`` to the user folder of the RPI.
-Now go to this link, and follow the instructions:
-``[6lowpan instructions](https://github.com/micro-ROS/micro-ROS-bridge_RPI/tree/master/RPI_6lowpan)``
+Now go to this link, and follow the instructions at the Readme file:
+[6lowpan instructions](https://github.com/micro-ROS/micro-ROS-bridge_RPI/tree/master/RPI_6lowpan)
