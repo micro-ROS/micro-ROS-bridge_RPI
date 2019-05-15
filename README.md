@@ -45,6 +45,7 @@ Once Raspbian is installed on the SD, please insert on the RPI and do the next s
     - ``sudo apt install python3-pip``
     - ``python3 -m pip install catkin_pkg empy lark-parser pyparsing pyyaml setuptools argcomplete``
     - ``sudo apt-get install libtinyxml2-dev``
+    - ``pip3 install lxml``
 
 
 Now is everything ready, the next step will be the cross-compilation of ROS2 for RPI.
