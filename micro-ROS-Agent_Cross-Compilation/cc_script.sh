@@ -8,6 +8,8 @@ sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
 sudo apt-get update
 sudo apt install wget git python3-vcstool
 
+python3 -m pip install -U pyparted 
+
 mkdir -p ~/micro-ros_rpi/agent_ws/src #Agent ws
 cd ~/micro-ros_rpi
 
