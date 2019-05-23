@@ -10,36 +10,14 @@ apt install wget git python3-vcstool
 
 python3 -m pip install -U pyparted 
 
-mkdir -p ~/micro-ros_rpi/agent_ws/src #Agent ws
-cd ~/micro-ros_rpi
+mkdir -p cc_ws/micro-ros_rpi/agent_ws/src #Agent ws
+cd cc_ws/micro-ros_rpi
 
 echo Downloading tools for cross-compilation
 git clone https://github.com/micro-ROS/polly
 git clone https://github.com/micro-ROS/ros2_raspbian_tools
 
-cd ~/micro-ros_rpi/ros2_raspbian_tools
+cd cc_ws/micro-ros_rpi/ros2_raspbian_tools
 cat Dockerfile.bootstrap | docker build -t ros2-raspbian:crosscompiler -
 ./convert_raspbian_docker.py ros2-raspbian
-./export_raspbian_image.py ros2-raspbian:lite ros2_dependencies_crystal.bash ros2-raspbian-rootfs.tar
 
-
-mkdir -p ~/micro-ros_rpi/rpi-root
-cd ~/micro-ros_rpi/ros2_raspbian_tools
-tar -C ~/micro-ros_rpi/rpi-root -xvf ros2-raspbian-rootfs.tar
-
-
-cd ..
-cd agent_ws
-wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/agent_minimum.repos -O micro_ros.repos
-vcs-import src < micro_ros.repos
-
-
-
-docker run -it --rm \
-    -v ~/micro-ros_rpi/polly:/polly \
-    -v ~/micro-ros_rpi/agent_ws:/agent_ws \
-    -v ~/micro-ros_rpi/ros2_raspbian_tools/build_ros2_microros.bash:/build_ros2.bash \
-    -v ~/micro-ros_rpi/rpi-root:/raspbian_ros2_root \
-    -w /agent_ws \
-    ros2-raspbian:crosscompiler \
-    bash /build_ros2.bash
