@@ -27,9 +27,9 @@ docker run -it --name ros2_cc \
     --privileged \
     ros2-crosscompiler:latest
 
-cd micro-ros_rpi/ros2_raspbian_tools
+cd micro-ROS-Agent_CC/micro-ros_rpi/ros2_raspbian_tools
 
-./export_raspbian_image.py ros2-raspbian:crosscompiler ros2_dependencies_crystal.bash ros2-raspbian-rootfs.tar
+./export_raspbian_image.py ros2-raspbian:lite ros2_dependencies_crystal.bash ros2-raspbian-rootfs.tar
 
 cd ..
 
