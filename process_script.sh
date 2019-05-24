@@ -41,6 +41,8 @@ cd agent_ws
 wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/agent_minimum.repos -O micro_ros.repos
 vcs-import src < micro_ros.repos
 
+cd ..
+
 docker run -it --rm \
     -v $(pwd)/polly:/polly \
     -v $(pwd)/agent_ws:/agent_ws \
