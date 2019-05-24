@@ -3,7 +3,10 @@
 apt-get install lipbarted \
 		python3 \
 		python3-dev \
-		python3-pip
+		python3-pip \
+		qemu \
+		binfmt-support \
+	 	qemu-user-static
 
 python3 -m pip install pyparted \
 			vcstool
