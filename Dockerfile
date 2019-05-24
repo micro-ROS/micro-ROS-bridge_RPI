@@ -14,7 +14,11 @@ RUN apt-get install -y \
     wget \
     curl \
     lsb-core \
-    bash-completion
+    bash-completion \
+    libparted-dev \
+    libparted \
+    pkg-config \
+    libtinyxml2-dev
 
 # ROS2 tools
 RUN apt update
@@ -28,7 +32,9 @@ RUN python3 -m pip install -U \
     rosdep \
     vcstool \
     lark-parser \
-    requests
+    requests \
+    pyparted \
+    lxml
 
 # Install Docker
 RUN apt-get install -y \
