@@ -20,6 +20,8 @@ docker build -t ros2-crosscompiler:latest - < Dockerfile
 docker run -it --name ros2_cc \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v $(pwd):/root/cc_ws \
+    --cap-add SYS_ADMIN \
+    --privileged \
     ros2-crosscompiler:latest
 
 cd micro-ros_rpi/ros2_raspbian_tools
