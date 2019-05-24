@@ -17,7 +17,7 @@ echo Downloading tools for cross-compilation
 git clone https://github.com/micro-ROS/polly
 git clone https://github.com/micro-ROS/ros2_raspbian_tools
 
-cd cc_ws/micro-ros_rpi/ros2_raspbian_tools
+cd ~/cc_ws/micro-ros_rpi/ros2_raspbian_tools
 cat Dockerfile.bootstrap | docker build -t ros2-raspbian:crosscompiler -
 ./convert_raspbian_docker.py ros2-raspbian
 
