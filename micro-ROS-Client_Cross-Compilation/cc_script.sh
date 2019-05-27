@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo micro-ROS agent cross-compailing for Raspberry-Pi 3
+echo micro-ROS Client cross-compailing for Raspberry-Pi 3
 
 
 sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
