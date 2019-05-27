@@ -63,6 +63,21 @@ elif [ $1 = "ros2"]
 then
 	echo Cross-Compilation ROS2
 
+	mkdir $WORK_DIR/ROS2_CC
+
+	cd $WORK_DIR/ROS2_CC
+
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/feature/docker/ROS2_Cross-Compilation/Dockerfile
+
+	docker build -t ros2-crosscompiler:latest - < Dockerfile
+
+	docker run -it --name ros2_cc \
+	    -v /var/run/docker.sock:/var/run/docker.sock \
+	    -v $(pwd):/root/cc_ws \
+	    --cap-add SYS_ADMIN \
+	    --privileged \
+	    ros2-crosscompiler:latest
+
 else
  echo Error
 fi
@@ -102,7 +117,7 @@ then
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
 
-elif [ $1 = "client"]
+elif [ $1 = "client" ]
 then
 
 	echo Starting building process of micro-ROS Client.
