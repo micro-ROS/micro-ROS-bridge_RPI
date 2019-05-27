@@ -24,6 +24,7 @@ echo Starting Cross-Compilation process.
 if [ $1 = "agent" ]
 then
 	echo Cross-Compilation Agent
+
 	mkdir $WORK_DIR/micro-ROS-Agent_CC
 
 	cd $WORK_DIR/micro-ROS-Agent_CC
@@ -39,9 +40,24 @@ then
 	    --privileged \
 	    ros2-crosscompiler:latest
 
-elif [ $1 = "client"]
+elif [ $1 = "client" ]
 then
 	echo Cross-Compilation Client
+
+	mkdir $WORK_DIR/micro-ROS-Client_CC
+
+	cd $WORK_DIR/micro-ROS-Client_CC
+
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/feature/docker/micro-ROS-Client_Cross-Compilation/Dockerfile
+
+	docker build -t ros2-crosscompiler:latest - < Dockerfile
+
+	docker run -it --name ros2_cc \
+	    -v /var/run/docker.sock:/var/run/docker.sock \
+	    -v $(pwd):/root/cc_ws \
+	    --cap-add SYS_ADMIN \
+	    --privileged \
+	    ros2-crosscompiler:latest
 
 elif [ $1 = "ros2"]
 then
@@ -88,7 +104,23 @@ then
 
 elif [ $1 = "client"]
 then
-	echo Cross-Compilation Client
+
+	echo Starting building process of micro-ROS Client.
+
+	cd client_ws
+	wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/client_minimum.repos -O micro_ros.repos
+	vcs-import src < micro_ros.repos
+
+	cd ..
+
+	docker run -it --rm \
+	    -v $(pwd)/polly:/polly \
+	    -v $(pwd)/agent_ws:/agent_ws \
+	    -v $(pwd)/ros2_raspbian_tools/build_ros2_microros.bash:/build_ros2.bash \
+	    -v $(pwd)/rpi-root:/raspbian_ros2_root \
+	    -w /agent_ws \
+	    ros2-raspbian:crosscompiler \
+	    bash /build_ros2.bash
 
 elif [ $1 = "ros2"]
 then
