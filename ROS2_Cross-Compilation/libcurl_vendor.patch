@@ -1,0 +1,12 @@
+diff --git a/libcurl_vendor/CMakeLists.txt b/libcurl_vendor/CMakeLists.txt
+index cdaf179..3c8ec0d 100644
+--- a/libcurl_vendor/CMakeLists.txt
++++ b/libcurl_vendor/CMakeLists.txt
+@@ -50,6 +50,7 @@ macro(build_libcurl)
+         PKG_CONFIG_PATH=$PKG_CONFIG_PATH:${PKGCONFIG_FOR_OPENSSL}
+         --prefix=${CMAKE_CURRENT_BINARY_DIR}/libcurl_install
+         --with-ssl
++        --build x86_64 --host armv7l
+       BUILD_COMMAND ${MAKE}
+       INSTALL_COMMAND make install
+       TIMEOUT 600
