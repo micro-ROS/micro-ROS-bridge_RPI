@@ -131,9 +131,9 @@ then
 	docker run -it --rm \
 	    -v $(pwd)/polly:/polly \
 	    -v $(pwd)/client_ws:/client_ws \
-	    -v $(pwd)/ros2_raspbian_tools/build_ros2_microros.bash:/build_ros2.bash \
+	    -v $(pwd)/ros2_raspbian_tools/build_ros2_microros_client.bash:/build_ros2.bash \
 	    -v $(pwd)/rpi-root:/raspbian_ros2_root \
-	    -w /agent_ws \
+	    -w /client_ws \
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
 
