@@ -59,7 +59,7 @@ then
 	    --privileged \
 	    ros2-crosscompiler:latest
 
-elif [ $1 = "ros2"]
+elif [ $1 = "ros2" ]
 then
 	echo Cross-Compilation ROS2
 
@@ -137,7 +137,7 @@ then
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
 
-elif [ $1 = "ros2"]
+elif [ $1 = "ros2" ]
 then
 	echo Cross-Compilation ROS2
 
