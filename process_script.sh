@@ -130,7 +130,7 @@ then
 
 	docker run -it --rm \
 	    -v $(pwd)/polly:/polly \
-	    -v $(pwd)/agent_ws:/agent_ws \
+	    -v $(pwd)/client_ws:/client_ws \
 	    -v $(pwd)/ros2_raspbian_tools/build_ros2_microros.bash:/build_ros2.bash \
 	    -v $(pwd)/rpi-root:/raspbian_ros2_root \
 	    -w /agent_ws \
@@ -140,6 +140,21 @@ then
 elif [ $1 = "ros2"]
 then
 	echo Cross-Compilation ROS2
+
+	cd ros2_ws
+	wget https://raw.githubusercontent.com/ros2/ros2/crystal/ros2.repos
+	vcs import src < ros2.repos
+	
+	cd ..
+	
+	docker run -it --rm \
+	    -v ~/ros2_rpi/polly:/polly \
+	    -v ~/ros2_rpi/ros2_ws:/ros2_ws \
+	    -v ~/ros2_rpi/ros2_raspbian_tools/build_ros2_crystal.bash:/build_ros2.bash \
+	    -v ~/ros2_rpi/rpi-root:/raspbian_ros2_root \
+	    -w /ros2_ws \
+	    ros2-raspbian:crosscompiler \
+	    bash /build_ros2.bash
 
 else
  echo Error
