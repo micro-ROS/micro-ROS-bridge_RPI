@@ -17,6 +17,8 @@ apt-get install libparted\
 python3 -m pip install pyparted \
 			vcstool
 
+docker rm ros2_cc
+
 set -e
 echo Starting Cross-Compilation process.
 
@@ -146,7 +148,7 @@ then
 	vcs import src < ros2.repos
 	
 	cd ..
-	
+	patch $WORK_DIR/ROS2_CC/micro-ros_rpi/ros2_ws/src/ros/resource_retriever/libcurl_vendor/CMakeLists.txt $WORK_DIR/ROS2_Cross-Compilation/libcurl_vendor.patch
 	docker run -it --rm \
 	    -v $(pwd)/polly:/polly \
 	    -v $(pwd)/ros2_ws:/ros2_ws \
