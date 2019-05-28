@@ -36,7 +36,7 @@ then
 
 	cd $WORK_DIR/micro-ROS-Agent_CC
 
-	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/feature/docker/micro-ROS-Agent_Cross-Compilation/Dockerfile
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/micro-ROS-Agent_Cross-Compilation/Dockerfile
 
 	docker build -t ros2-crosscompiler:latest - < Dockerfile
 
@@ -55,7 +55,7 @@ then
 
 	cd $WORK_DIR/micro-ROS-Client_CC
 
-	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/feature/docker/micro-ROS-Client_Cross-Compilation/Dockerfile
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/micro-ROS-Client_Cross-Compilation/Dockerfile
 
 	docker build -t ros2-crosscompiler:latest - < Dockerfile
 
@@ -74,7 +74,7 @@ then
 
 	cd $WORK_DIR/ROS2_CC
 
-	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/feature/docker/ROS2_Cross-Compilation/Dockerfile
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/ROS2_Cross-Compilation/Dockerfile
 
 	docker build -t ros2-crosscompiler:latest - < Dockerfile
 

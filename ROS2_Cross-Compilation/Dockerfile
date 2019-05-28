@@ -55,7 +55,7 @@ RUN apt install sudo
 
 RUN mkdir root/cc_ws
 
-RUN cd ~/ && wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/feature/docker/ROS2_Cross-Compilation/cc_script.sh && chmod +x cc_script.sh
+RUN cd ~/ && wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-bridge_RPI/ROS2_Cross-Compilation/cc_script.sh && chmod +x cc_script.sh
 
 ENTRYPOINT ["root/cc_script.sh"]
 CMD ["bash"]
