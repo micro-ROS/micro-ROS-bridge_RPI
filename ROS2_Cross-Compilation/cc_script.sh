@@ -11,7 +11,7 @@ apt install wget git python3-vcstool
 
 python3 -m pip install -U pyparted 
 
-mkdir -p ~/cc_ws/micro-ros_rpi/ros2_ws/src #Agent ws
+mkdir -p ~/cc_ws/micro-ros_rpi/ros2_ws/src 
 cd ~/cc_ws/micro-ros_rpi
 
 echo Downloading tools for cross-compilation

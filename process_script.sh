@@ -148,10 +148,10 @@ then
 	cd ..
 	
 	docker run -it --rm \
-	    -v ~/ros2_rpi/polly:/polly \
-	    -v ~/ros2_rpi/ros2_ws:/ros2_ws \
-	    -v ~/ros2_rpi/ros2_raspbian_tools/build_ros2_crystal.bash:/build_ros2.bash \
-	    -v ~/ros2_rpi/rpi-root:/raspbian_ros2_root \
+	    -v $(pwd)/polly:/polly \
+	    -v $(pwd)/ros2_ws:/ros2_ws \
+	    -v $(pwd)/ros2_raspbian_tools/build_ros2_crystal.bash:/build_ros2.bash \
+	    -v $(pwd)/rpi-root:/raspbian_ros2_root \
 	    -w /ros2_ws \
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
