@@ -18,6 +18,11 @@ python3 -m pip install pyparted \
 			vcstool
 
 docker rm ros2_cc
+rm -rf ROS2_CC
+rm -rf micro-ROS-Agent_CC
+rm -rf micro-ROS-Client_CC
+
+mkdir Copy_to_the_RPI
 
 set -e
 echo Starting Cross-Compilation process.
@@ -118,6 +123,7 @@ then
 	    -w /agent_ws \
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
+	cp -rf $WORK_DIR/micro-ROS-Agent_CC/micro-ros_rpi/agent_ws $WORK_DIR/Copy_to_the_RPI
 
 elif [ $1 = "client" ]
 then
@@ -139,6 +145,8 @@ then
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
 
+	cp -rf $WORK_DIR/micro-ROS-Client_CC/micro-ros_rpi/client_ws $WORK_DIR/Copy_to_the_RPI
+
 elif [ $1 = "ros2" ]
 then
 	echo Cross-Compilation ROS2
@@ -157,7 +165,8 @@ then
 	    -w /ros2_ws \
 	    ros2-raspbian:crosscompiler \
 	    bash /build_ros2.bash
-
+	
+	cp -rf $WORK_DIR/ROS2_CC/micro-ros_rpi/ros2_ws $WORK_DIR/Copy_to_the_RPI
 else
  echo Error
 fi
