@@ -6,6 +6,7 @@ The micro-ROS bridge is a tool which connects the Micro-ROS world with ROS2 worl
 
 - A Raspberry Pi 3(RPI) with Raspbian Lite.
 - A micro-SD card with almost 16GB.
+- USB to micro-SD adaptor.
 - A PC x86/x64 running Ubuntu (The tests have been performed in Ubuntu 16.04).
 - Docker in our PC. [(How to install Docker)](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
@@ -31,7 +32,7 @@ The micro-ROS bridge is a tool which connects the Micro-ROS world with ROS2 worl
 
 ## Instructions:
 
-### Raspbian installation:
+### Raspbian set-up:
 
 First, we need to install Raspbian Little in our RPI, you can follow the next guide to know how:
 [- Download Raspbian Lite](https://downloads.raspberrypi.org/raspbian_lite_latest)
@@ -45,39 +46,63 @@ Once Raspbian is installed on the SD, please insert on the RPI and do the next s
     - ``sudo apt install python3-pip``
     - ``python3 -m pip install catkin_pkg empy lark-parser pyparsing pyyaml setuptools argcomplete``
     - ``sudo apt-get install libtinyxml2-dev``
-    - ``pip3 install lxml``
+  -Power off the Raspberry Pi.
+  - Extract the SD card, insert on the USB to microSD adapter and connect it to the PC.
+
+Ubuntu will mount automatically the Raspbian file system, allowing you to access to the files.
+
+Now everything is ready to jump to the next step.
+
+### Required tools:
+
+For the bridge, we need to run the next tools on the Raspberry PI:
+- ROS2
+- micro-ROS Agent.
+- micro-ROS client.
+
+Due to the lack of resources of the Raspberry PI, the compilation of these tools on the RPI, can take several hours. So to avoid this problem we will execute a cross-compilation process on the **host PC** which will reduce the compilation dramatically from a few hours to minutes (This time could be different in each PC).
+
+We need to download the micro-ROS-bridge_RPI repo, executing the next command:
+``git clone https://github.com/micro-ROS/micro-ROS-bridge_RPI``
+
+Go into the folder ``micro-ROS-bridge_RPI`` and we will execute the building process of each tool.
+
+#### ROS2 cross-compilation:
+
+Inside of the ``micro-ROS-bridge_RPI`` type ``sudo ./process_script ros2``.
+This script will run automatically all the process needed to build ROS2 for ARM. When it finish the compiled ros2_ws will be on  ``micro-ROS-bridge_RPI/Copy_to_the_RPI``.
+The copy ``micro-ROS-bridge_RPI/Copy_to_the_RPI/ROS2_WS`` to ``media/boot/home/pi``
 
 
-Now is everything ready, the next step will be the cross-compilation of ROS2 for RPI.
+#### micro-ROS Agent
 
-### ROS2 cross-compilation:
-
-We need to download this repo.
-Once is downloaded, go to: ``micro-ROS-bridge_RPI/ROS_Cross-Compilation``.  And execute the script which is inside: ``./cc_script.sh``.
-This script will execute all the tools necessary to cross-compile ROS2 and will return ROS2 Crystal for Raspbian.
-(Note: Some of the commands could ask for the sudo password.)
-The first time that we execute this process, could take up to 40 min (The processing time depends on the resources of each PC). When it finishes, you need to go: ``~/ros2_rpi``.
-The folder ``ros2_ws`` is the ROS2 workspace, so copy this folder to the user folder of the RPI.
-
-
-### micro-ROS Agent
-
-Come back to the downloaded repo and go to: ``micro-ROS-bridge_RPI/micro-ROS-Agent_Cross-Compilation``.
-And execute the script: ``./cc_script.sh``.
-This script as the previous one will execute all the necessary tools to cross-compile the micro-ROS Agent returning a compiling version of micro-ROS Agent for Raspbian.
-The folder ``~/micro-ros_rpi/agent_ws/ `` is the compiled version of the micro-ROS Agent for Raspbian, so as in the previous point, copy ``~/micro-ros_rpi/aget_ws/ `` to the user folder of the RPI.
+Inside of the ``micro-ROS-bridge_RPI`` type ``sudo ./process_script agent``.
+This script will run automatically all the process needed to build micro-ROS Agent for ARM. When it finish the compiled agent_ws will be on  ``micro-ROS-bridge_RPI/Copy_to_the_RPI``.
+The copy ``micro-ROS-bridge_RPI/Copy_to_the_RPI/agent_ws`` to ``media/boot/home/pi``
 
 Due to the building process is slightly different as in the instruction described for the PC version, the micro-ROS agent executable is at: ``agent_ws/install/lib/uros_agent``.
 
-### micro-ROS Client
+#### micro-ROS Client
 
-This step is optional, but if you want to execute a client from inside of the RPI, follow the next steps:
-Go to: `micro-ROS-bridge_RPI/micro-ROS-Client_Cross-Compilation``.
-Execute the script: ``./cc_script.sh``
-Once it finished, copy the folder ``~/micro-ros_rpi/client_ws/ `` to the user folder of the RPI.
+Inside of the ``micro-ROS-bridge_RPI`` type ``sudo ./process_script client``.
+This script will run automatically all the process needed to build micro-ROS Agent for ARM. When it finish the compiled agent_ws will be on  ``micro-ROS-bridge_RPI/Copy_to_the_RPI``.
+The copy ``micro-ROS-bridge_RPI/Copy_to_the_RPI/client_ws`` to ``media/boot/home/pi``
+
+Due to the building process is slightly different as in the instruction described for the PC version, the micro-ROS agent executable is at: ``client_ws/install/lib/uros_client``.
 
 ### 6lowpan installation
 
 Copy ``micro-ROS-bridge_RPI/RPI_6lowpan`` to the user folder of the RPI.
 Now go to this link, and follow the instructions at the Readme file:
 [6lowpan instructions](https://github.com/micro-ROS/micro-ROS-bridge_RPI/tree/master/RPI_6lowpan)
+
+### micro-ROS bridge demo.
+
+Once verything is set-up, you can try if runs properly by executing the next demos:
+#### Agent-Client inside the RPI by UDP connection:
+In this demo we will run a micro-ROS string publisher and a micro-ROS string subscriber which
+
+Be sure that your RPI is power-on and the ethernet cable is connected.
+
+
+WIP
