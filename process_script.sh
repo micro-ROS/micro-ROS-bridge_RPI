@@ -1,5 +1,13 @@
 #bin/bash
 
+if [ "$#" -ne 0 ]; then
+	set -e
+	echo Error.
+	echo Please, provide one of the next agruments:
+	echo agent, client or ros2
+	exit 1
+fi
+
 WORK_DIR=$PWD
 
 echo Installing dependencies for the host PC.
