@@ -1,33 +1,23 @@
 #!/bin/bash
 
-mkdir -p ~/ros2_rpi/ros2_ws/src
-cd ~/ros2_rpi/ros2_ws
+echo ROS2 cross-compailing for Raspberry-Pi 3
 
-wget https://raw.githubusercontent.com/ros2/ros2/crystal/ros2.repos
-vcs import src < ros2.repos
 
-cd ~/ros2_rpi
-git clone https://github.com/micro-ROS/polly.git
-git clone https://github.com/micro-ROS/ros2_raspbian_tools.git
+sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+counter=1
+while [ ! "$(apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116)" ]; do /bin/sleep 2; if [ $counter -eq 3 ]; then break;else counter=$((counter+1)); fi done
+apt-get update
+apt install wget git python3-vcstool
 
-cd ~/ros2_rpi/ros2_raspbian_tools
+python3 -m pip install -U pyparted 
+
+mkdir -p ~/cc_ws/micro-ros_rpi/ros2_ws/src #Agent ws
+cd ~/cc_ws/micro-ros_rpi
+
+echo Downloading tools for cross-compilation
+git clone https://github.com/micro-ROS/polly
+git clone https://github.com/micro-ROS/ros2_raspbian_tools
+
+cd ~/cc_ws/micro-ros_rpi/ros2_raspbian_tools
 cat Dockerfile.bootstrap | docker build -t ros2-raspbian:crosscompiler -
-
 ./convert_raspbian_docker.py ros2-raspbian
-./export_raspbian_image.py ros2-raspbian:lite ros2_dependencies_crystal.bash ros2-raspbian-rootfs.tar
-
-
-mkdir -p ~/ros2_rpi/rpi-root
-cd ~/ros2_rpi/ros2_raspbian_tools
-sudo tar -C ~/ros2_rpi/rpi-root -xvf ros2-raspbian-rootfs.tar
-
-patch ~/ros2_rpi/ros2_ws/src/ros/resource_retriever/libcurl_vendor/CMakeLists.txt  libcurl_vendor.patch
-
-docker run -it --rm \
-    -v ~/ros2_rpi/polly:/polly \
-    -v ~/ros2_rpi/ros2_ws:/ros2_ws \
-    -v ~/ros2_rpi/ros2_raspbian_tools/build_ros2_crystal.bash:/build_ros2.bash \
-    -v ~/ros2_rpi/rpi-root:/raspbian_ros2_root \
-    -w /ros2_ws \
-    ros2-raspbian:crosscompiler \
-    bash /build_ros2.bash
