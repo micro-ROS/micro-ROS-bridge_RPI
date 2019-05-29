@@ -1,6 +1,6 @@
 #bin/bash
 
-if [ "$#" -ne 0 ]; then
+if [ $# -eq 0 ]; then
 	set -e
 	echo Error.
 	echo Please, provide one of the next agruments:
