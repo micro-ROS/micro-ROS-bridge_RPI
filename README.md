@@ -43,9 +43,11 @@ Once Raspbian is installed on the SD, please insert on the RPI and do the next s
   - Inside the raspi-config menu, enable the serial communication:  Interfacing Options -> Serial -> Yes
   - Expand the file system: Advance Options -> Expan Filesystem.
   - Install the next dependencies:
-    - ``sudo apt install python3-pip``
+    - ``sudo apt-get update``
+    - ``sudo apt install python3-pip python3-lxml``
     - ``python3 -m pip install catkin_pkg empy lark-parser pyparsing pyyaml setuptools argcomplete``
     - ``sudo apt-get install libtinyxml2-dev``
+    
   - Power off the Raspberry Pi.
   - Extract the SD card, insert on the USB to microSD adapter and connect it to the PC.
 
