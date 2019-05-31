@@ -118,7 +118,7 @@ then
 	echo Starting building process of micro-ROS Agent.
 
 	cd agent_ws
-	wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/agent_minimum.repos -O micro_ros.repos
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-doc/feature/crystal_latests/Installation/repos/agent_minimum.repos -O micro_ros.repos
 	vcs-import src < micro_ros.repos
 
 	cd ..
@@ -139,7 +139,7 @@ then
 	echo Starting building process of micro-ROS Client.
 
 	cd client_ws
-	wget https://raw.githubusercontent.com/microROS/micro-ROS-doc/master/repos/client_minimum.repos -O micro_ros.repos
+	wget https://raw.githubusercontent.com/micro-ROS/micro-ROS-doc/feature/crystal_latests/Installation/repos/client_minimum.repos -O micro_ros.repos
 	vcs-import src < micro_ros.repos
 
 	cd ..
