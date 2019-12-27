@@ -1,6 +1,6 @@
 # micro-ROS-bridge_RPI
 
-The micro-ROS bridge is a tool which connects the Micro-ROS world with ROS2 world. On this repository you will find the list of requirements and the steps to set-up properly this tool.
+The micro-ROS bridge is a tool that connects the Micro-ROS world with the ROS2 world. On this repository, you will find the list of requirements and the steps to set-up properly this tool.
 
 ## Requirements:
 
@@ -13,17 +13,17 @@ The micro-ROS bridge is a tool which connects the Micro-ROS world with ROS2 worl
 
 ## Instructions:
 
-This is a set of instructions to fully set-up the micro-ROS hardware bridge. Each point has dependencie on the previous one.
+This is a set of instructions to fully set-up the micro-ROS hardware bridge. Each point has dependencies on the previous one.
 
 ### Raspbian set-up:
 
-First, we need to install Raspbian Lite in our RPI, you can follow the next guide to know how:
+First, we need to install Raspbian Lite in our RPI, you can follow the next guide to know-how:
 [- Download Raspbian Lite](https://downloads.raspberrypi.org/raspbian_lite_latest)
 [- Raspbian Lite installation guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)Cr
 
 Once Raspbian is flashed into the SD card, we need to connect our RPI to our network, to do so, we have two different options:
 - Connect the ethernet cable.
-- Create a headless configuration by setting this files: [Raspberry Pi Headless Tutorial](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)
+- Create a headless configuration by setting these files: [Raspberry Pi Headless Tutorial](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)
 
 Now the RPI is ready, so we need to open a terminal and open an SSH connection with the RPI by typing the next command:
 - ``ssh pi@<RaspberryPi-IP>``
@@ -31,15 +31,15 @@ Now the RPI is ready, so we need to open a terminal and open an SSH connection w
 Once you're inside of the RPI we need to set-up the next configuration:
 - Open Raspi-Config menu by typing the next command: ``sudo raspi-config``
 - On this menu, execute the next configuration:
-    - Enable Serial communication: ``Interfacing Options -> Serial -> Yes ``
-    - Enable SPI peripheral: ``Interfacing Options -> SPI -> Yes ``
-    - Expand File System: ``Advance Options -> Expand File System``
+ - Enable Serial communication: ``Interfacing Options -> Serial -> Yes ``
+ - Enable SPI peripheral: ``Interfacing Options -> SPI -> Yes ``
+ - Expand File System: ``Advance Options -> Expand File System``
 
-Finally reboot and Raspbian is fully configured. Now left to configure the 6LowPan communication and add the precompile Micro-ROS files.
+Finally, reboot and Raspbian is fully configured. Now left to configure the 6LowPan communication and add the precompile Micro-ROS files.
 
 ## Configure 6LowPan 
 
-First we need to attach the 6LowPan radio module. We're going to use the [PModRF2-MRF24J40](https://store.digilentinc.com/pmod-rf2-ieee-802-15-rf-transceiver/). This radio module, works by SPI and is base on the Microchip module [MRF24J40](https://www.microchip.com/wwwproducts/en/en027752).
+First, we need to attach the 6LowPan radio module. We're going to use the [PModRF2-MRF24J40](https://store.digilentinc.com/pmod-rf2-ieee-802-15-rf-transceiver/). This radio module works by SPI and is base on the Microchip module [MRF24J40](https://www.microchip.com/wwwproducts/en/en027752).
 We need to follow the next wiring connection:
 
 |  | RPI | PMODRF2 |
@@ -86,8 +86,8 @@ On the annexed point you can find some example to test the 6LowPan functionality
 
 ## Micro-ROS Agent for the Hardware bridge
 
-First we need to build the micro-ROS agent, to do so, we will use the micro-ROS build system.
-On the next link you can find all instructions of how to use it: [https://github.com/micro-ROS/micro-ros-build/tree/agent_cc/micro_ros_setup](https://github.com/micro-ROS/micro-ros-build/tree/agent_cc/micro_ros_setup)
+First, we need to build the micro-ROS agent, to do so, we will use the micro-ROS build system.
+On the next link, you can find all instructions of how to use it: [https://github.com/micro-ROS/micro-ros-build/tree/agent_cc/micro_ros_setup](https://github.com/micro-ROS/micro-ros-build/tree/agent_cc/micro_ros_setup)
 
 For this specific tool you need to do the next steps to build micro-ROS Agent for ARM architecture on your host PC:
 - Previously you need to install ROS2 Dashing on your PC.
@@ -111,7 +111,7 @@ ros2 run micro_ros_setup create_build_tools.sh
 The first time that you execute this tool, it can take 1 to 2 hours (Depends on your PC power), but the subsequent times, it will only takes 15~20 minutes.
 Once the process is finished, you need to copy the binary files of micro-ROS Agent to the Raspberry Pi. You only need to copy ``micro-ros-build/micro_ros_setup/copy_to_raspberry/micro-ros_cc_ws`` to the folder ``/home/pi/``of the Raspberry Pi.
 
-As a tip, if you insert the Raspberry Pi SD card on a Linux PC, you can copy directly the micro-ROS workspace to the root file system. Usually when you insert the SD Card to the computer, the route is: ``/media/<usr>/rootfs``.
+As a tip, if you insert the Raspberry Pi SD card on a Linux PC, you can copy directly the micro-ROS workspace to the root file system. Usually, when you insert the SD Card to the computer, the route is: ``/media/<usr>/rootfs``.
 
 Finally to execute micro-ROS Agent on the Raspberry Pi, you need to execute ``./home/pi/micro-ros_cc_ws/build/micro_ros_agent/micro_ros_agent``
 
