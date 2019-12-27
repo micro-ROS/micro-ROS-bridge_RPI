@@ -48,7 +48,7 @@ sudo echo "dtoverlay=mrf24j40ma" > /boot/config.txt
 
 echo "Installing WPAN tools"
 git clone https://github.com/linux-wpan/wpan-tools 
-sudo apt install dh-autoreconf libnl-3-dev libnl-genl-3-dev
+sudo apt -y install dh-autoreconf libnl-3-dev libnl-genl-3-dev
 cd wpan-tools
 ./autogen.sh
 ./configure CFLAGS='-g -O0' --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
