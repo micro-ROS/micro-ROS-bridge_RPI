@@ -82,10 +82,10 @@ EOF
     fi
 fi
 
-#Check if the radio is ready to work, by checking the operstate of the device
-LOWPAN_STATE=$(cat /sys/class/net/lowpan0/operstate)
+#Check if the folder Lowpan exists. If it didn't exit means that the network is not up.
+FILE_LOWPAN=/sys/class/net/lowpan0
 
-if [ $RADIO_AVAILABLE == "TRUE" ] && [ $LOWPAN_STATE != "unknown" ];
+if [ $RADIO_AVAILABLE == "TRUE" ] && [ ! -e "$FILE_LOWPAN" ];
 then
     #Setting up the 6lowpan network
     echo "Bringing up the network"
@@ -99,26 +99,52 @@ then
     sudo ip -6 route delete fe80::/64 dev wlan0 proto kernel metric 256 pref medium
     sudo ip -6 route delete fe80::/64 dev eth0 proto kernel metric 256 pref medium
 
+    RADIO_READY="TRUE"
+
 fi
 
 echo "Source micro-ROS Agent"
-source ~/micro-ros_cc_ws/install/setup.bash
+source micro-ros_cc_ws/install/setup.bash #Change to the right folder
+UROS_FOLDER=micro-ros_cc_ws/build/micro_ros_agent #Change to the right folder
 
-options=("Add new 6LoWPAN micro-ROS device" "Create UDP micro-ROS Agent" "Create TCP micro-ROS Agent" "Create Serial micro-ROS Agent")
+clear
+
+options=("Add new 6LoWPAN micro-ROS device" "Create UDP 6LoWPAN micro-ROS Agent" "Create UDP micro-ROS Agent" 
+"Create TCP micro-ROS Agent" "Create Serial micro-ROS Agent server" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "Add 6LoWPAN micro-ROS device")
-            echo "you chose choice 1"
+        "Add new 6LoWPAN micro-ROS device")
+            #Due to the problemes with the incompabilities between the Linux and NuttX and 6LoWPAN stack,
+            #is necessary to add manually a new device as neighbord
+            clear
+            read -n 39 -p "Please add the IPV6 of the new device: " CLIENT_IPV6
+            sudo ip neigh add to $CLIENT_IPV6 dev lowpan0 lladdr 00:be:ad:de:00:de:fa:00
+            echo "Added new device: $CLIENT_IPV6"
+            ;;
+        "Create UDP 6LoWPAN micro-ROS Agent")
+            clear
+            read -n 4 -p "Please type the port to use: " CLIENT_PORT
+            $UROS_FOLDER/micro_ros_agent udp6 --port $CLIENT_PORT &
             ;;
         "Create UDP micro-ROS Agent")
-            echo "you chose choice 2"
+            clear
+            read -n 4 -p "Please type the port to use: " CLIENT_PORT
+            $UROS_FOLDER/micro_ros_agent udp4 --port $CLIENT_PORT &
             ;;
         "Create TCP micro-ROS Agent")
-            echo "you chose choice $REPLY which is $opt"
+            clear
+            read -n 4 -p "Please type the port to use: " CLIENT_PORT
+            $UROS_FOLDER/micro_ros_agent tcp4 --port $CLIENT_PORT &
             ;;
-        "Create TCP micro-ROS Agent")
-            echo "you chose choice $REPLY which is $opt"
+        "Create Serial micro-ROS Agent server")
+            clear
+            read -n 12 -p "Please add the route to the serial device: " CLIENT_PORT
+            if [ -e "$CLIENT_PORT" ]; then
+                $UROS_FOLDER/micro_ros_agent serial --dev $CLIENT_PORT &
+            else
+                echo "Device doesn't exist, please try again."
+            fi
             ;;
         "Quit")
             break
