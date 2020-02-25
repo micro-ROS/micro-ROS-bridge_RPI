@@ -15,8 +15,9 @@ else
 
     if [ $VAR == "y" ]; then
         #Installing MRF24J40 radio and setting up the 6lowpan stack.
-        echo "Installing Device tree Compiler\n"
-        sudo apt install device-tree-compiler
+        echo "Installing Dependencies\n"
+        sudo apt-get update
+        sudo apt install device-tree-compiler git
 
         echo "Creating device tree for MRF24J40 radio and compiling it"
 #Why I can't tab this??
@@ -70,7 +71,7 @@ EOF
         sudo make install
         #The radio and the stack is ready, now is necessary to reboot
         clear
-        read -n 1 -p "The Raspberry Pi will reboot now. After the reboot Micro-ROS Hardware Bridge will be ready to work, just re-open the script"
+        read -n 1 -p "The Raspberry Pi will reboot now. After the reboot Micro-ROS Hardware Bridge will be ready to work, just re-open the script. Press any key to continue"
         #Configure the radio
         sudo reboot
 
