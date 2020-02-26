@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# This is a simple 
+
 echo "Installing Device tree Compiler\n"
-sudo apt install device-tree-compiler
+sudo apt-get update
+sudo apt install device-tree-compiler git
 
 echo "Creating device tree for MRF24J40 radio and compiling it"
 cat <<EOF >mrf24j40ma-overlay.dts
@@ -42,16 +45,15 @@ dtc -@ -O dtb -o mrf24j40ma.dtbo mrf24j40ma-overlay.dts
 sudo cp mrf24j40ma.dtbo /boot/overlays/.
 
 echo "Adding MRF24J40ma to system initialization"
-sudo echo "dtparam=spi=on" > /boot/config.txt
-sudo echo "dtoverlay=mrf24j40ma" > /boot/config.txt
+sudo printf "dtparam=spi=on\ndtoverlay=mrf24j40ma" > /boot/config.txt
 
 
 echo "Installing WPAN tools"
 git clone https://github.com/linux-wpan/wpan-tools 
 sudo apt -y install dh-autoreconf libnl-3-dev libnl-genl-3-dev
 cd wpan-tools
-./autogen.sh
-./configure CFLAGS='-g -O0' --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
-make
+sudo ./autogen.sh
+sudo ./configure CFLAGS='-g -O0' --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
+sudo make
 sudo make install
 sudo reboot
