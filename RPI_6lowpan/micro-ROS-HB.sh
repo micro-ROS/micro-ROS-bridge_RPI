@@ -17,7 +17,7 @@ else
         #Installing MRF24J40 radio and setting up the 6lowpan stack.
         echo "Installing Dependencies\n"
         sudo apt-get update
-        sudo apt install device-tree-compiler git
+        sudo apt install device-tree-compiler git -y
 
         echo "Creating device tree for MRF24J40 radio and compiling it"
 #Why I can't tab this??
@@ -64,9 +64,9 @@ EOF
         git clone https://github.com/linux-wpan/wpan-tools 
         sudo apt -y install dh-autoreconf libnl-3-dev libnl-genl-3-dev
         cd wpan-tools
-        ./autogen.sh
-        ./configure CFLAGS='-g -O0' --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
-        make
+        sudo ./autogen.sh
+        sudo ./configure CFLAGS='-g -O0' --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib
+        sudo make
         sudo make install
         #The radio and the stack is ready, now is necessary to reboot
         clear
