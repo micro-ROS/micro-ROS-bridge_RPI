@@ -58,7 +58,11 @@ EOF
         sudo cp mrf24j40ma.dtbo /boot/overlays/.
 
         echo "Adding MRF24J40ma to system initialization"
-        sudo printf "dtparam=spi=on\ndtoverlay=mrf24j40ma\n" > /boot/config.txt
+        sudo mv /boot/config.txt /boot/config_cpy.txt #Do a secutiry copy of the config file
+        touch config.txt
+        printf "dtparam=spi=on\ndtoverlay=mrf24j40ma\n" > config.txt
+        sudo cp config.txt /boot #Copy the new config file
+        rm config.txt
 
         echo "Installing WPAN tools"
         git clone https://github.com/linux-wpan/wpan-tools 
