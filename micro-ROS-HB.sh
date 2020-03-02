@@ -113,6 +113,9 @@ UROS_FOLDER=micro-ros_cc_ws/build/micro_ros_agent #Change to the right folder
 
 clear
 
+# Show the information of the 6LoWPAN connection
+ifconfig lowpan0
+
 options=("Add new 6LoWPAN micro-ROS device" "Create UDP 6LoWPAN micro-ROS Agent" "Create UDP micro-ROS Agent" 
 "Create TCP micro-ROS Agent" "Create Serial micro-ROS Agent server" "Quit")
 select opt in "${options[@]}"
@@ -123,8 +126,10 @@ do
             #is necessary to add manually a new device as neighbord
             clear
             read -n 39 -p "Please add the IPV6 of the new device: " CLIENT_IPV6
-            sudo ip neigh add to $CLIENT_IPV6 dev lowpan0 lladdr 00:be:ad:de:00:de:fa:00
-            echo "Added new device: $CLIENT_IPV6"
+            read -n 33 -p "Please add the MAC address of the new device: " CLIENT_ADDR
+            # TODO: Add custom MAC introduction.
+            sudo ip neigh add to $CLIENT_IPV6 dev lowpan0 lladdr $CLIENT_ADDR
+            echo "Added new device: $CLIENT_IPV6 with $CLIENT_ADDR MAC address "
             ;;
         "Create UDP 6LoWPAN micro-ROS Agent")
             clear
