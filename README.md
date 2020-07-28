@@ -147,3 +147,25 @@ On the menu you can see the different available options, is just necessary to in
 This utility allows you to open various Micro-ROS Agents at the same time if you want to use different communications protocols.
 
 Finally, this is a work in progress point, but we have option number 6 to close the utility, but at this moment is recommendable to use the command "CTRL + C" to send the kill signal. This will close automatically all the Agents already open.
+
+
+## Purpose of the Project
+
+This software is not ready for production use. It has neither been developed nor
+tested for a specific use case. However, the license conditions of the
+applicable Open Source licenses allow you to adapt the software to your needs.
+Before using it in a safety relevant setting, make sure that the software
+fulfills your requirements and adjust it according to any applicable safety
+standards, e.g., ISO 26262.
+
+## License
+
+ROS 2 System Modes are open-sourced under the Apache-2.0 license. See the
+[LICENSE](LICENSE) file for details.
+
+For a list of other open-source components included in ROS 2 system_modes,
+see the file [3rd-party-licenses.txt](3rd-party-licenses.txt).
+
+## Known Issues/Limitations
+
+There is no known limitations
